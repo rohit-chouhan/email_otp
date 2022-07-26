@@ -20,7 +20,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   TextEditingController email = new TextEditingController();
   TextEditingController otp = new TextEditingController();
-  Email_OTP myauth = Email_OTP();
+  EmailOTP myauth = EmailOTP();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +46,7 @@ class _MyAppState extends State<MyApp> {
                             appEmail: "me@rohitchouhan.com",
                             appName: "Email OTP",
                             userEmail: email.text,
+                            otpLength: 6,
                           );
                           if (await myauth.sendOTP() == true) {
                             ScaffoldMessenger.of(context)

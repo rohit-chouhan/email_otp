@@ -3,31 +3,34 @@ library email_otp;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-/// A Email OTP Class
-class Email_OTP {
-  ///Name of your app, so user will receive mail from this name
-  static String? app_name;
+class EmailOTP {
+  /// Name of your application.
+  static String? appName;
 
-  ///Your email, from where you want to send mail
-  static String? app_email;
+  /// Your email address.
+  static String? appEmail;
 
   ///Email address of client, where you want to send OTP
-  static String? user_email;
+  static String? userEmail;
 
   ///Will save correct OTP
-  static String? get_otp;
+  static String? getOTP;
+
+  //Custom length for otp digits
+  static int? otpLength;
 
   ///Function use to config Email OTP
-  setConfig({appName, appEmail, userEmail}) {
-    app_name = appName;
-    app_email = appEmail;
-    user_email = userEmail;
+  setConfig({appName, appEmail, userEmail, otpLength}) {
+    appName = appName;
+    appEmail = appEmail;
+    userEmail = userEmail;
+    otpLength = otpLength;
   }
 
   ///Function will return true / false
   sendOTP() async {
     var url = Uri.parse(
-      'https://flutter.rohitchouhan.com/email-otp?app_name=${app_name}&app_email=${app_email}&user_email=${user_email}',
+      'https://flutter.rohitchouhan.com/email-otp/v2.php?app_name=$appName&app_email=$appEmail&user_email=$userEmail&otp_length=$otpLength',
     );
     http.Response response = await http.get(url);
     try {
@@ -35,7 +38,7 @@ class Email_OTP {
         String data = response.body;
         var decodedData = jsonDecode(data);
         if (decodedData['status'] == true) {
-          get_otp = decodedData['otp'].toString();
+          getOTP = decodedData['otp'].toString();
           return true;
         } else {
           return false;
@@ -50,7 +53,7 @@ class Email_OTP {
 
   ///Function will return true / false
   verifyOTP({otp}) {
-    if (get_otp == otp) {
+    if (getOTP == otp) {
       print("OTP has been verified! ✅");
       return true;
     } else {
