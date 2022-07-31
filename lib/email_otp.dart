@@ -3,6 +3,8 @@ library email_otp;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+enum OTPType { digitsOnly, stringOnly, mixed }
+
 class EmailOTP {
   /// Name of your application.
   String? _appName;
@@ -19,18 +21,32 @@ class EmailOTP {
   //Custom length for otp digits
   int? _otpLength;
 
+  //Custom OTP Type
+  String? _type;
+
   ///Function use to config Email OTP
-  setConfig({appName, appEmail, userEmail, otpLength}) {
+  setConfig({appName, appEmail, userEmail, otpLength, otpType}) {
     _appName = appName;
     _appEmail = appEmail;
     _userEmail = userEmail;
     _otpLength = otpLength;
+    switch (otpType) {
+      case OTPType.digitsOnly:
+        _type = "digits";
+        break;
+      case OTPType.stringOnly:
+        _type = "string";
+        break;
+      case OTPType.mixed:
+        _type = "mixed";
+        break;
+    }
   }
 
   ///Function will return true / false
   sendOTP() async {
     var url = Uri.parse(
-      'https://flutter.rohitchouhan.com/email-otp/v2.php?app_name=$_appName&app_email=$_appEmail&user_email=$_userEmail&otp_length=$_otpLength',
+      'https://flutter.rohitchouhan.com/email-otp/v2.php?app_name=$_appName&app_email=$_appEmail&user_email=$_userEmail&otp_length=$_otpLength&type=$_type',
     );
     http.Response response = await http.get(url);
     try {

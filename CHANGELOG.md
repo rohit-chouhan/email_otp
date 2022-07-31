@@ -10,3 +10,11 @@
 
 * Changed class Name from Email_OTP to EmailOTP.
 * otpLength property added.
+
+## 1.0.3
+
+* otpType property added.
+
+## 1.0.4
+
+* format fixed

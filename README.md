@@ -22,12 +22,14 @@ myauth.setConfig(
     appName: "Email OTP",
     userEmail: email.text,
     otpLength: 6,
+    otpType: OTPType.digitsOnly
 );
 ```
 1. `appEmail` is your personal or company email, so client we see this mail when they receive OTP.
 2. `appName` is your app name, client will received mail with this name.
 3. `userEmail` property where OTP need to sent.
 4. `otpLength` is the length of OTP.
+5. `otpType` OTPType.digitsOnly, OTPType.stringOnly, OTPType.mixed
 
 ⭐ **sendOTP()**
 this function will send OTP, and return boolean

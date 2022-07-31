@@ -47,6 +47,7 @@ class _MyAppState extends State<MyApp> {
                             appName: "Email OTP",
                             userEmail: email.text,
                             otpLength: 6,
+                            otpType: OTPType.digitsOnly
                           );
                           if (await myauth.sendOTP() == true) {
                             ScaffoldMessenger.of(context)
