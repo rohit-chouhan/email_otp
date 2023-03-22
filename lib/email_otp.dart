@@ -46,7 +46,7 @@ class EmailOTP {
   ///Function will return true / false
   sendOTP() async {
     var url = Uri.parse(
-      'https://flutter.rohitchouhan.com/email-otp/v2.php?app_name=$_appName&app_email=$_appEmail&user_email=$_userEmail&otp_length=$_otpLength&type=$_type',
+      'https://flutter.rohitchouhan.com/email-otp/v3.php?app_name=$_appName&app_email=$_appEmail&user_email=$_userEmail&otp_length=$_otpLength&type=$_type',
     );
     http.Response response = await http.get(url);
     try {
