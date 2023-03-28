@@ -34,6 +34,7 @@ myauth.setConfig(
 5. `otpType` OTPType.digitsOnly, OTPType.stringOnly, OTPType.mixed
 
 ⭐ **setSMTP()** (new)
+
 this function will config your SMTP to send OTP from custom email address, make sure your SMTP credentials are correct, test your SMTP from www.smtper.net
 
 ```dart
