@@ -38,7 +38,7 @@ myauth.setConfig(
 this function will config your SMTP to send OTP from custom email address, make sure your SMTP credentials are correct, test your SMTP from www.smtper.net
 
 ```dart
-myauth.setConfig(
+myauth.setSMTP(
     host: "smtp.rohitchouhan.com",
     auth: true,
     username: "email-otp@rohitchouhan.com",
