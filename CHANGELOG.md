@@ -18,3 +18,9 @@
 ## 1.0.4
 
 * format fixed
+
+## 2.0.0
+
+* bug fixed
+* new cool email template
+* new feature added for custom SMTP
