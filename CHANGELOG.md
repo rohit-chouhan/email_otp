@@ -33,3 +33,7 @@
 
 * bug fixed
 * Customize Template [added]
+
+## 2.1.1
+
+* error handling [added]
