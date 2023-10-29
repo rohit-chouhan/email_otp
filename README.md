@@ -1,25 +1,45 @@
-A fast & simple email authentication OTP sender and verification flutter package. It generates an OTP on the recipient's email which can be used to verify their identity. 
+# Welcome to Email OTP: Your Fast and Simple Email Authentication OTP Solution!
 
-<p align="center"><img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/banner.jpg"/></p>
+Email OTP is a Flutter package designed to simplify email authentication through one-time passwords (OTPs). With Email OTP, you can effortlessly generate OTPs and send them to your users' email addresses, ensuring secure identity verification.
+
+![Email OTP Banner](https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/banner.jpg)
 
 [![rohit-chouhan](https://user-images.githubusercontent.com/82075108/182797964-a92e0c59-b9ef-432d-92af-63b6475a4b1c.svg)](https://www.github.com/rohit-chouhan)
-_[![sponsor](https://user-images.githubusercontent.com/82075108/182797969-11208ddc-b84c-4618-8534-18388d24ac18.svg)](https://github.com/sponsors/rohit-chouhan)
+[![sponsor](https://user-images.githubusercontent.com/82075108/182797969-11208ddc-b84c-4618-8534-18388d24ac18.svg)](https://github.com/sponsors/rohit-chouhan)
 
+## Table of Contents
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Configuration](#configuration)
+  - [Customizing Email Templates (Optional)](#customizing-email-templates-optional)
+  - [Configuring Custom SMTP (Optional)](#configuring-custom-smtp-optional)
+- [Sending and Verifying OTPs](#sending-and-verifying-otps)
+- [Complete Example](#complete-example)
+- [Reporting Bugs or Issues](#reporting-bugs-or-issues)
+- [Copyright and License](#copyright-and-license)
 
-#### Usage
-```
+## Getting Started
+
+To get started, import the `email_otp` package in your Flutter project:
+
+```dart
 import 'package:email_otp/email_otp.dart';
 ```
-#### Methods
-⭐ **Class Initialization**
-```dart
- EmailOTP myauth = EmailOTP();
-```
-⭐ **setConfig()**
-this function will config your OTP authentication.
+
+## Usage
+
+Initialize the EmailOTP class:
 
 ```dart
-myauth.setConfig(
+EmailOTP myAuth = EmailOTP();
+```
+
+## Configuration
+
+Configure your OTP authentication settings using the `setConfig` method:
+
+```dart
+myAuth.setConfig(
     appEmail: "me@rohitchouhan.com",
     appName: "Email OTP",
     userEmail: email.text,
@@ -27,18 +47,36 @@ myauth.setConfig(
     otpType: OTPType.digitsOnly
 );
 ```
-1. `appEmail` is your personal or company email, so client we see this mail when they receive OTP.
-2. `appName` is your app name, client will received mail with this name.
-3. `userEmail` property where OTP need to sent.
-4. `otpLength` is the length of OTP.
-5. `otpType` OTPType.digitsOnly, OTPType.stringOnly, OTPType.mixed
 
-⭐ **setSMTP()** (new)
+1. `appEmail`: Your personal or company email address, visible to clients when they receive OTPs.
+2. `appName`: Your app's name, displayed to clients in the email.
+3. `userEmail`: The recipient's email address where the OTP needs to be sent.
+4. `otpLength`: The length of the OTP (e.g., 6 digits).
+5. `otpType`: Choose from `OTPType.digitsOnly`, `OTPType.stringOnly`, or `OTPType.mixed` for different OTP formats.
 
-this function will config your SMTP to send OTP from custom email address, make sure your SMTP credentials are correct, test your SMTP from www.smtper.net
+### Customizing Email Templates (Optional)
+
+You can customize your email template using the `setTemplate` method. If not used, the default template provided by Email OTP will be used.
 
 ```dart
-myauth.setSMTP(
+var template = 'YOUR HTML CODE HERE';
+myAuth.setTemplate(
+    render: template 
+);
+```
+
+In your HTML, use placeholders like `{{app_name}}` and `{{otp}}` to display the app name and OTP. For example:
+
+```
+Thank you for choosing {{app_name}}. Your OTP is {{otp}}.
+```
+
+### Configuring Custom SMTP (Optional)
+
+Configure your SMTP settings using the `setSMTP` method if you want to send OTPs from a custom email address. Make sure your SMTP credentials are correct. Test your SMTP configuration at [smtper.net](https://www.smtper.net).
+
+```dart
+myAuth.setSMTP(
     host: "smtp.rohitchouhan.com",
     auth: true,
     username: "email-otp@rohitchouhan.com",
@@ -47,33 +85,42 @@ myauth.setSMTP(
     port: 576
 );
 ```
-1. `host` is your SMTP Hostname
-2. `auth` is your SMTP Email authetication required or not
-3. `username` is your SMTP Email Address
-4. `password` is your SMTP Email Password
-5. `secure` TLS or SSL
-6. `port` is port number of your SMTP Email Server
 
-⭐ **sendOTP()**
-this function will send OTP, and return boolean
+1. `host`: Your SMTP hostname.
+2. `auth`: Boolean (true/false) indicating if SMTP authentication is required.
+3. `username`: Your SMTP email address.
+4. `password`: Your SMTP email password.
+5. `secure`: Choose from "TLS" or "SSL" for secure connections.
+6. `port`: Port number of your SMTP email server.
+
+## Sending and Verifying OTPs
+
+Use the following methods to send and verify OTPs:
+
+### Sending OTP
+
 ```dart
-await myauth.sendOTP();
+await myAuth.sendOTP();
 ```
-⭐ **verifyOTP()**
-this function will verify OTP, and return boolean. this method must have one parameter for OTP, which is enter by client.
+
+### Verifying OTP
+
 ```dart
-var inputOTP = 987654; //which is entered by client, after receive mail
-await myauth.verifyOTP(
-  otp: inputOTP
+var inputOTP = 987654; // OTP entered by the client after receiving the email
+await myAuth.verifyOTP(
+    otp: inputOTP
 );
 ```
-#### See Complete Example
-Code : [https://pub.dev/packages/email_otp/example](https://pub.dev/packages/email_otp/example "https://pub.dev/packages/email_otp/example")
 
-# Report bugs or issues
+## Complete Example
 
-You are welcome to open a _[ticket](https://github.com/rohit-chouhan/email_otp/issues)_ on github if any problems arise. New ideas are always welcome.
+Find a complete example in the [Email OTP package documentation](https://pub.dev/packages/email_otp/example).
 
-# Copyright and License
+## Reporting Bugs or Issues
 
-> Copyright © 2023 **[Rohit Chouhan](https://rohitchouhan.com)**. Licensed under the _[MIT LICENSE](https://github.com/rohit-chouhan/otp/blob/main/LICENSE)_.
+Feel free to open a [ticket](https://github.com/rohit-chouhan/email_otp/issues) on GitHub if you encounter any problems. We also welcome new ideas and suggestions.
+
+## Copyright and License
+
+Copyright © 2023 [Rohit Chouhan](https://rohitchouhan.com). Licensed under the [MIT LICENSE](https://github.com/rohit-chouhan/otp/blob/main/LICENSE).
+

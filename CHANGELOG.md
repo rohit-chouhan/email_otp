@@ -24,3 +24,12 @@
 * bug fixed
 * new cool email template
 * new feature added for custom SMTP
+
+## 2.0.1
+
+* bug fixed
+
+## 2.1.0
+
+* bug fixed
+* Customize Template [added]

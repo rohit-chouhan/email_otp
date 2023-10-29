@@ -42,6 +42,9 @@ class EmailOTP {
   //SMTP Port
   int? _port;
 
+  //Custom HTML Template
+  String? _template;
+
     //Function to set custom SMTP Configuration
     setSMTP({host, auth, username, password, secure, port}){
       _host = host;
@@ -71,6 +74,11 @@ class EmailOTP {
       }
     }
 
+    ///Function use to use custom html template
+    setTemplate({render}) {
+      _template = render;
+    }
+
     ///Function will return true / false
     sendOTP() async {
     var url = Uri.parse('https://flutter.rohitchouhan.com/email-otpV2/v2.php');
@@ -80,6 +88,7 @@ class EmailOTP {
       "user_email": _userEmail,
       "otp_length": _otpLength,
       "type": _type,
+      "template":_template,
       "smtp_host":_host,
       "smtp_auth":_auth,
       "smtp_username":_username,
@@ -114,10 +123,8 @@ class EmailOTP {
   ///Function will return true / false
   verifyOTP({otp}) {
     if (_getOTP == otp) {
-      print("OTP has been verified! ✅");
       return true;
     } else {
-      print("OTP is invalid ❌");
       return false;
     }
   }
