@@ -1,3 +1,6 @@
+### ⚠️🔴 IMPORTANT❗🔴⚠️ 
+Due to a high volume of requests, you may experience issues while sending emails. As we provide free email sending services, rest assured that we are actively working to resolve this matter as soon as possible. This service package is here to stay! Thank you for your understanding and continued support ❤️😊.
+
 # Welcome to Email OTP: Your Fast and Simple Email Authentication OTP Solution!
 
 Email OTP is a Flutter package designed to simplify email authentication through one-time passwords (OTPs). With Email OTP, you can effortlessly generate OTPs and send them to your users' email addresses, ensuring secure identity verification.
