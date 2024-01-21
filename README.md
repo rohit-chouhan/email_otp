@@ -98,7 +98,7 @@ myAuth.setSMTP(
 6. `port`: Port number of your SMTP email server.
 
 ### ‣ Email Theme
-We already have a few good and beautiful email templates. To assign a theme, you need to use the `setTheme`` method with the parameter of the theme version. If you do not use this function, it will automatically take the latest theme.
+We already have a few good and beautiful email templates. To assign a theme, you need to use the `setTheme` method with the parameter of the theme version. If you do not use this function, it will automatically take the latest theme.
 
 ```dart
 myAuth.setTheme(
