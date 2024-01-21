@@ -89,7 +89,7 @@ class EmailOTP {
 
   ///Function will return true / false
   sendOTP() async {
-    var url = Uri.parse('https://flutter.rohitchouhan.com/email-otpV2/v2.php');
+    var url = Uri.parse('https://email-otp.api.rohitchouhan.com/v2/');
     Map<String, dynamic> body = {
       "app_name": _appName,
       "app_email": _appEmail,
