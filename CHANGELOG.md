@@ -37,3 +37,8 @@
 ## 2.1.1
 
 * error handling [added]
+
+## 2.1.2
+
+* bugs fixed
+* theme customization [added]

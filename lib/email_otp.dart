@@ -45,6 +45,9 @@ class EmailOTP {
   //Custom HTML Template
   String? _template;
 
+  //Customize Theme
+  String? _theme;
+
   //Function to set custom SMTP Configuration
   setSMTP({host, auth, username, password, secure, port}) {
     _host = host;
@@ -53,6 +56,11 @@ class EmailOTP {
     _password = password;
     _secure = secure;
     _port = port;
+  }
+
+  //Function to set custom theme
+  setTheme({theme}) {
+    _theme = theme;
   }
 
   ///Function use to config Email OTP
@@ -89,6 +97,7 @@ class EmailOTP {
       "otp_length": _otpLength,
       "type": _type,
       "template": _template,
+      "theme": _theme,
       "smtp_host": _host,
       "smtp_auth": _auth,
       "smtp_username": _username,
