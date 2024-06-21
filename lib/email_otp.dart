@@ -130,7 +130,9 @@ class EmailOTP {
       return false;
     }
   }
-
+String? getSentOTP() {
+    return _getOTP;
+  }
   ///Function will return true / false
   verifyOTP({otp}) {
     if (_getOTP == otp) {
