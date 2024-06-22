@@ -1,144 +1,171 @@
+Email OTP is a Flutter package designed to simplify email authentication using one-time passwords (OTPs). With Email OTP, you can effortlessly generate OTPs and send them to users' email addresses, ensuring secure identity verification. This package offers an efficient and secure method for incorporating email-based OTP authentication into your Flutter applications.
 
-# Welcome to Email OTP: Your Fast and Simple Email Authentication OTP Solution!
+![Email OTP Banner](https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/banner.png)
 
-Email OTP is a Flutter package designed to simplify email authentication through one-time passwords (OTPs). With Email OTP, you can effortlessly generate OTPs and send them to your users' email addresses, ensuring secure identity verification.
-
-![Email OTP Banner](https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/banner.jpg)
-
-[![rohit-chouhan](https://user-images.githubusercontent.com/82075108/182797964-a92e0c59-b9ef-432d-92af-63b6475a4b1c.svg)](https://www.github.com/rohit-chouhan)
-[![sponsor](https://user-images.githubusercontent.com/82075108/182797969-11208ddc-b84c-4618-8534-18388d24ac18.svg)](https://github.com/sponsors/rohit-chouhan)
+[![GitHub](https://img.shields.io/badge/Rohit_Chouhan-GitHub-black?logo=github)](https://www.github.com/rohit-chouhan)
+_[![Sponsor](https://img.shields.io/badge/Sponsor-Become_A_Sponsor-blue?logo=githubsponsors)](https://github.com/sponsors/rohit-chouhan)_
 
 ## Table of Contents
-- [Getting Started](#-getting-started)
-- [Usage](#-usage)
-- [Configuration](#-configuration)
-   * [Customizing Email Templates (Optional)](#-customizing-email-templates-optional)
-   * [Configuring Custom SMTP (Optional)](#-configuring-custom-smtp-optional)
-   * [Email Theme](#-email-theme)
-- [Sending and Verifying OTPs](#-sending-and-verifying-otps)
-   * [Sending OTP](#-sending-otp)
-   * [Verifying OTP](#-verifying-otp)
-- [Complete Example](#-complete-example)
-- [Reporting Bugs or Issues](#-reporting-bugs-or-issues)
-- [Copyright and License](#-copyright-and-license)
 
-## ‣ Getting Started
+- [Configuration](#configuration)
+  - [Advanced Configuration](#advanced-configuration)
+- [SMTP](#smtp)
+- [Template](#template)
+- [Sending OTP](#sending-otp)
+- [Verifying OTP](#verifying-otp)
+- [Get OTP](#get-otp)
+- [Example](#example)
+- [Report bugs or issues](#report-bugs-or-issues)
+- [Contributors](#contributors)
 
-To get started, import the `email_otp` package in your Flutter project:
+## Configuration
+
+The simplest way to 🛠️ configure the EmailOTP package is by calling the `config` method without any parameters. This sets up the default configuration for generating OTPs.
 
 ```dart
-import 'package:email_otp/email_otp.dart';
+void main() {
+  EmailOTP.config();
+}
 ```
 
-## ‣ Usage
+#### Advanced Configuration
 
-Initialize the EmailOTP class:
-
-```dart
-EmailOTP myAuth = EmailOTP();
-```
-
-## ‣ Configuration
-
-Configure your OTP authentication settings using the `setConfig` method:
+For more control over the OTP generation and email settings, you can pass various parameters to the `config` method. Below is an example demonstrating how to customize the configuration.
 
 ```dart
-myAuth.setConfig(
-    appEmail: "me@rohitchouhan.com",
-    appName: "Email OTP",
-    userEmail: email.text,
+void main() {
+  EmailOTP.config(
+    appName: 'App Name',
+    otpType: OTPType.numeric,
+    emailTheme: EmailTheme.v1,
+    appEmail: 'me@rohitchouhan.com',
     otpLength: 6,
-    otpType: OTPType.digitsOnly
-);
+  );
+}
 ```
 
-1. `appEmail`: Your personal or company email address, visible to clients when they receive OTPs.
-2. `appName`: Your app's name, displayed to clients in the email.
-3. `userEmail`: The recipient's email address where the OTP needs to be sent.
-4. `otpLength`: The length of the OTP (e.g., 6 digits).
-5. `otpType`: Choose from `OTPType.digitsOnly`, `OTPType.stringOnly`, or `OTPType.mixed` for different OTP formats.
+Parameters
 
-### ‣ Customizing Email Templates (Optional)
+1. `appName`: A string representing the name of your application.
+2. `otpType`: Specifies the type of OTP to be generated. It supports three types:
+   - `OTPType.numeric`: OTP will consist only of numbers.
+   - `OTPType.alpha`: OTP will consist only of alphabetic characters.
+   - `OTPType.alphaNumeric`: OTP will consist of both alphabetic characters and numbers.
+3. `emailTheme`: Defines the theme for the OTP email. The package currently supports five themes:
+   - | Theme           | Theme Preview                                                                                           |
+     | --------------- | ------------------------------------------------------------------------------------------------------- |
+     | `EmailTheme.v1` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v1.PNG" width="500px;"> |
+     | `EmailTheme.v2` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v2.PNG" width="500px;"> |
+     | `EmailTheme.v3` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v3.PNG" width="500px;"> |
+     | `EmailTheme.v4` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v4.PNG" width="500px;"> |
+     | `EmailTheme.v5` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v5.PNG" width="500px;"> |
+4. `appEmail`: The email address from which the OTP emails will be sent.
+5. `otpLength`: An integer specifying the length of the OTP. In this example, the OTP will be 6 digits long.
 
-You can customize your email template using the `setTemplate` method. If not used, the default template provided by Email OTP will be used.
+By configuring these parameters, you can tailor the OTP generation and email sending process to suit your application's requirements.
+
+## SMTP (Optional)
+To send OTPs from a custom email address, configure your SMTP settings using the `setSMTP` method. Ensure that your SMTP credentials are accurate.
 
 ```dart
-var template = 'YOUR HTML CODE HERE';
-myAuth.setTemplate(
-    render: template 
-);
+void main() {
+  EmailOTP.config();
+  EmailOTP.setSMTP(
+    host: 'mail.rohitchouhan.com',
+    emailPort: EmailPort.port25,
+    secureType: SecureType.tls,
+    username: 'test@rohitchouhan.com',
+    password: 'm9eFxuBQ4hbD5XGP3TEdWN',
+  );
+}
 ```
 
-In your HTML, use placeholders like `{{app_name}}` and `{{otp}}` to display the app name and OTP. For example:
+Parameters
 
-```
-Thank you for choosing {{app_name}}. Your OTP is {{otp}}.
-```
+1. `host`: The hostname of your SMTP server.
+2. `emailPort`: The port number used by the SMTP server. Supported values include:
+   - `EmailPort.port25`
+   - `EmailPort.port465`
+   - `EmailPort.port587`
+3. `secureType:` The type of security used by the SMTP server. Supported values include:
+   - `SecureType.none`
+   - `SecureType.tls`
+   - `SecureType.ssl`
+4. `username`: The username for your SMTP server account.
+5. `password`: The password for your SMTP server account.
 
-### ‣ Configuring Custom SMTP (Optional)
+By configuring these parameters, you can ensure that your application is able to send OTP emails securely and efficiently.
 
-Configure your SMTP settings using the `setSMTP` method if you want to send OTPs from a custom email address. Make sure your SMTP credentials are correct. Test your SMTP configuration at [smtper.net](https://www.smtper.net).
+## Template (Optional)
+
+You can also customize the email 🌐 template used to send the OTP. Use the `setTemplate` method to provide your own HTML template.
 
 ```dart
-myAuth.setSMTP(
-    host: "smtp.rohitchouhan.com",
-    auth: true,
-    username: "email-otp@rohitchouhan.com",
-    password: "*************",
-    secure: "TLS",
-    port: 576
-);
+void main() {
+  EmailOTP.config();
+  EmailOTP.setTemplate(
+    template: '''
+    <div style="background-color: #f4f4f4; padding: 20px; font-family: Arial, sans-serif;">
+      <div style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h1 style="color: #333;">{{appName}}</h1>
+        <p style="color: #333;">Your OTP is <strong>{{otp}}</strong></p>
+        <p style="color: #333;">This OTP is valid for 5 minutes.</p>
+        <p style="color: #333;">Thank you for using our service.</p>
+      </div>
+    </div>
+    ''',
+  );
+}
 ```
 
-1. `host`: Your SMTP hostname.
-2. `auth`: Boolean (true/false) indicating if SMTP authentication is required.
-3. `username`: Your SMTP email address.
-4. `password`: Your SMTP email password.
-5. `secure`: Choose from "TLS" or "SSL" for secure connections.
-6. `port`: Port number of your SMTP email server.
+Parameters
 
-### ‣ Email Theme
-We already have a few good and beautiful email templates. To assign a theme, you need to use the `setTheme` method with the parameter of the theme version. If you do not use this function, it will automatically take the latest theme.
+- `template`: A string containing the HTML content of your custom email template. Use placeholders such as `{{appName}}` and `{{otp}}` to dynamically insert the application name and OTP respectively.
+
+By configuring these parameters and using a custom template, you can ensure that your OTP emails are tailored to match your application's branding and style.
+
+## Sending OTP
+
+To 📧 send an 🔐 OTP to a user's email address, use the `sendOTP` method. This method takes the recipient's email address as a parameter.
 
 ```dart
-myAuth.setTheme(
-    theme:"v3"
-);
+  EmailOTP.sendOTP(email: emailController.text)
 ```
 
-|  Theme Parameter | Theme Design  |
-| ------------ | ------------ |
-|  v1  |  ![](https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v1.PNG) |
-|  v2  |  ![](https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v2.PNG) |
-|  v3  |  ![](https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v3.PNG) |
+Parameters
 
-## ‣ Sending and Verifying OTPs
+- `email`: The recipient's email address where the OTP will be sent.
 
-Use the following methods to send and verify OTPs:
+## Verifying OTP
 
-### ‣ Sending OTP
+To verify an 🔐 OTP entered by the user, use the `verifyOTP` method. This method takes the OTP entered by the user as a parameter and returns a boolean indicating whether the OTP is correct.
 
 ```dart
-await myAuth.sendOTP();
+  EmailOTP.verifyOTP(otp: otpController.text)
 ```
 
-### ‣ Verifying OTP
+Parameters
+
+- `otp`: The OTP entered by the user.
+
+## Get OTP
+
+This code will print the OTP generated by the `getOTP` method.
 
 ```dart
-var inputOTP = 987654; // OTP entered by the client after receiving the email
-await myAuth.verifyOTP(
-    otp: inputOTP
-);
+  print(EmailOTP.getOTP);
 ```
 
-## ‣ Complete Example
+## Example
 
-Find a complete example in the [Email OTP package documentation](https://pub.dev/packages/email_otp/example).
+👉 For a complete example, refer to the [Email OTP package documentation](https://pub.dev/packages/email_otp/example).
 
-## ‣ Reporting Bugs or Issues
+## Report bugs or issues
 
-Feel free to open a [ticket](https://github.com/rohit-chouhan/email_otp/issues) on GitHub if you encounter any problems. We also welcome new ideas and suggestions.
+You are welcome to open a _[ticket](https://github.com/rohit-chouhan/email_otp/issues)_ on github if any 🐞 problems arise. New ideas are always welcome.
 
-## ‣ Copyright and License
+## Contributors
 
-Copyright © 2023 [Rohit Chouhan](https://rohitchouhan.com). Licensed under the [MIT LICENSE](https://github.com/rohit-chouhan/otp/blob/main/LICENSE).
+<a href="https://github.com/chouhan-rahul"><img src="https://avatars.githubusercontent.com/u/82075108" width="60px;" alt="Rahul Chouhan" style="border-radius:50%"><br/><sub><b>Chouhan Rahul</b></sub></a>
+
+> Copyright © 2024 **[Rohit Chouhan](https://rohitchouhan.com)**. Licensed under the _[MIT LICENSE](https://github.com/rohit-chouhan/email_otp/blob/main/LICENSE)_
