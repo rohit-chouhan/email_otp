@@ -1,23 +1,33 @@
-## 1.0.0
+## 3.0.0
+* Various bug fixes have been implemented.
+* Documentation has been improved for better clarity and ease of use.
+* New features added.
+* Added new themes: v4 and v5.
+* Replaced `setConfig()` with `config()`.
+* In the `sendOTP()` method, use the `userEmail:` property.
+* Removed the `auth:` property from the `setSMTP` method; it is no longer needed.
+* You can now easily pass the OTP type using the `OTPType` enum class.
+* You can now pass the `smtp_port:` value easily using the `EmailPort` enum class.
+* You can now pass the `smtp_secure:` value easily using the `SecureType` enum class.
+* You can now select themes using the `EmailTheme` enum class.
 
-* initial release.
+## 2.1.2
 
-## 1.0.1
+* bugs fixed
+* theme customization [added]
 
-* readme changed.
+## 2.1.1
 
-## 1.0.2
+* error handling [added]
 
-* Changed class Name from Email_OTP to EmailOTP.
-* otpLength property added.
+## 2.1.0
 
-## 1.0.3
+* bug fixed
+* Customize Template [added]
 
-* otpType property added.
+## 2.0.1
 
-## 1.0.4
-
-* format fixed
+* bug fixed
 
 ## 2.0.0
 
@@ -25,20 +35,23 @@
 * new cool email template
 * new feature added for custom SMTP
 
-## 2.0.1
+## 1.0.4
 
-* bug fixed
+* format fixed
 
-## 2.1.0
+## 1.0.3
 
-* bug fixed
-* Customize Template [added]
+* otpType property added.
 
-## 2.1.1
+## 1.0.2
 
-* error handling [added]
+* Changed class Name from Email_OTP to EmailOTP.
+* otpLength property added.
 
-## 2.1.2
+## 1.0.1
 
-* bugs fixed
-* theme customization [added]
+* readme changed.
+
+## 1.0.0
+
+* initial release.
