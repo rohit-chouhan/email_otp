@@ -1,3 +1,6 @@
+## 3.0.1
+* Documentation broken image link fixed
+
 ## 3.0.0
 * Various bug fixes have been implemented.
 * Documentation has been improved for better clarity and ease of use.
