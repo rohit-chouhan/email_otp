@@ -1,6 +1,6 @@
 name: email_otp
 description: A fast & simple email authentication OTP sender and verification flutter package.
-version: 3.0.1
+version: 3.0.2
 homepage: https://rohitchouhan.com
 repository: https://github.com/rohit-chouhan/email_otp
 
@@ -19,7 +19,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 screenshots:
-  - description: 'Email OTP Logo'
+  - description: "Email OTP Logo"
     path: logo.png
 
 topics:
