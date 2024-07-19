@@ -63,7 +63,7 @@ Parameters
      | `EmailTheme.v3` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v3.PNG" width="500px;"> |
      | `EmailTheme.v4` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v4.png" width="500px;"> |
      | `EmailTheme.v5` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v5.png" width="500px;"> |
-     | `EmailTheme.v6` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v6.png" width="500px;"> |
+     | `EmailTheme.v6` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v6.PNG" width="500px;"> |
 5. `appEmail`: The email address from which the OTP emails will be sent.
 6. `otpLength`: An integer specifying the length of the OTP. In this example, the OTP will be 6 digits long.
 
