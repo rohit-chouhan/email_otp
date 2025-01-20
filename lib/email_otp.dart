@@ -208,7 +208,27 @@ class EmailOTP {
     });
   }
 
+  @visibleForTesting
+  static String testableGetRandomOTP() => _getRandomOTP();
+
   static String _getRandomOTP() {
-    return (Random().nextInt(900000) + 100000).toString();
+    final random = Random();
+    final otpBuffer = StringBuffer();
+    for (var i = 0; i < (_otpLength ?? 1); i++) {
+      switch (_otpType) {
+        case OTPType.alpha:
+          otpBuffer.write(String.fromCharCode(random.nextInt(26) + 65));
+          break;
+        case OTPType.alphaNumeric:
+          otpBuffer.write(random.nextBool()
+              ? String.fromCharCode(random.nextInt(26) + 65)
+              : random.nextInt(10).toString());
+          break;
+        case OTPType.numeric:
+        default:
+          otpBuffer.write(random.nextInt(10).toString());
+      }
+    }
+    return otpBuffer.toString();
   }
 }
