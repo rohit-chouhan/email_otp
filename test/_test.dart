@@ -26,4 +26,41 @@ void main() {
     }
     expect(isSent, true);
   });
+
+  group('Random OTP', () {
+    test('getRandomOTP generates OTP of correct length', () {
+      EmailOTP.config(otpLength: 6);
+
+      String otp = EmailOTP.testableGetRandomOTP();
+
+      EmailOTP.config(otpLength: 8);
+
+      String otp2 = EmailOTP.testableGetRandomOTP();
+
+      EmailOTP.config(otpLength: 12);
+
+      String otp3 = EmailOTP.testableGetRandomOTP();
+
+      expect(otp.length, 6);
+      expect(otp2.length, 8);
+      expect(otp3.length, 12);
+    });
+
+    test('getRandomOTP generates numeric OTP', () {
+      EmailOTP.config(otpLength: 6);
+
+      String otp = EmailOTP.testableGetRandomOTP();
+
+      expect(int.tryParse(otp), isNotNull);
+    });
+
+    test('getRandomOTP generates different OTPs on subsequent calls', () {
+      EmailOTP.config(otpLength: 6);
+
+      String otp1 = EmailOTP.testableGetRandomOTP();
+      String otp2 = EmailOTP.testableGetRandomOTP();
+
+      expect(otp1, isNot(equals(otp2)));
+    });
+  });
 }
