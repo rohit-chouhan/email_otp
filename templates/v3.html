@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Password Reset Email</title>
+    <meta name="description" content="Password Reset Email Template.">
+    <style type="text/css">
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: #f2f3f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            padding: 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto;
+            width: 80px;
+        }
+
+        h1 {
+            color: white;
+            font-weight: 500;
+            margin: 20px 0;
+            font-size: 28px;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #ecf0f1;
+            margin: 20px 0;
+        }
+
+        p {
+            color: #7f8c8d;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0 20px;
+        }
+
+        .otp-btn {
+            background: #3498db;
+            text-decoration: none !important;
+            font-weight: 500;
+            margin-top: 20px;
+            color: #ffffff;
+            text-transform: uppercase;
+            font-size: 14px;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 4px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .otp-btn:hover {
+            background: #2980b9;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #ecf0f1;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: #95a5a6;
+            margin: 0;
+        }
+
+        .otp {
+            background: red;
+            padding: 5px 15px 5px 15px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 20px;
+            color: white;
+            background-color: #2c3e50;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img class="logo" src="https://cdn-icons-png.flaticon.com/128/10002/10002041.png" title="logo" alt="logo">
+            <h1>
+                {{appName}}
+            </h1>
+        </div>
+        <div class="divider"></div>
+        <center>
+            <p>Your requested OTP for <b>
+                    {{appName}}
+                </b></p><br>
+            <span class="otp">
+                {{otp}}
+            </span>
+        </center>
+        <div class="divider"></div>
+        <div class="footer">
+            <p class="footer-text">&copy; <strong><a href="https://www.rohitchouhan.com">www.rohitchouhan.com</a>
+                </strong></p>
+        </div>
+    </div>
+</body>
+
+</html>

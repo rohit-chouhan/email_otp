@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #3f51b5;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: #333333;
+            margin: 20px 0;
+        }
+
+        .otp {
+            display: inline-block;
+            font-size: 32px;
+            color: #3f51b5;
+            background-color: #f1f1f1;
+            padding: 10px 20px;
+            border-radius: 4px;
+            letter-spacing: 4px;
+        }
+
+        .footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+            color: #888888;
+            font-size: 12px;
+        }
+    </style>
+    <title>{{appName}} OTP</title>
+</head>
+
+<body>
+    <br>
+    <br>
+    <div class="container">
+        <div class="header">
+            <h1>{{appName}}</h1>
+        </div>
+        <div class="content">
+            <p>Your One-Time Password (OTP) is:</p>
+            <div class="otp">{{otp}}</div>
+            <p>Please use this OTP to complete your login process. Do not share this code with anyone.</p>
+        </div>
+        <div class="footer">
+            &copy; <a href="http://rohitchouhan.com">www.rohitchouhan.com</a>. All rights
+            reserved.
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,4 +1,9 @@
-## 3.0.2
+## 3.1.0
+- **BREAKING CHANGE**: Removed server-side dependency. Now sends emails directly from the client.
+- **REQUIRED**: You must now provide your own SMTP credentials using `EmailOTP.setSMTP()`.
+- Added remote template fetching from GitHub via jsDelivr.
+- Added dependency `mailer` and `http`.
+
 
 - OTP expiry option added
 - `getOTP` changed into method `getOTP()`

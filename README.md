@@ -21,17 +21,37 @@ _[![Sponsor](https://img.shields.io/badge/Sponsor-Become_A_Sponsor-blue?logo=git
 
 ## Configuration
 
-The simplest way to 🛠️ configure the EmailOTP package is by calling the `config` method without any parameters. This sets up the default configuration for generating OTPs.
+The simplest way to 🛠️ configure the EmailOTP package is by calling the `config` method.
 
 ```dart
 void main() {
-  EmailOTP.config();
+  EmailOTP.config(
+    appName: 'MyApp',
+    otpType: OTPType.numeric,
+    emailTheme: EmailTheme.v1,
+  );
 }
 ```
 
+## SMTP Configuration (Required)
+
+⚠️ **IMPORTANT**: As of version 3.1.0, this package no longer uses a default server. You **MUST** configure your own SMTP server to send emails.
+
+```dart
+  EmailOTP.setSMTP(
+    host: 'smtp.gmail.com',
+    emailPort: EmailPort.port587,
+    secureType: SecureType.tls,
+    username: 'your-email@gmail.com',
+    password: 'your-app-password',
+  );
+```
+
+> **Note**: For Gmail, use an [App Password](https://support.google.com/accounts/answer/185833) if 2-Step Verification is enabled.
+
 #### Advanced Configuration
 
-For more control over the OTP generation and email settings, you can pass various parameters to the `config` method. Below is an example demonstrating how to customize the configuration.
+For more control over the OTP generation and email settings, you can pass various parameters to the `config` method.
 
 ```dart
 void main() {
@@ -46,45 +66,6 @@ void main() {
 }
 ```
 
-Parameters
-
-1. `appName`: A string representing the name of your application.
-2. `otpType`: Specifies the type of OTP to be generated. It supports three
-   types:
-   - `OTPType.numeric`: OTP will consist only of numbers.
-   - `OTPType.alpha`: OTP will consist only of alphabetic characters.
-   - `OTPType.alphaNumeric`: OTP will consist of both alphabetic characters and numbers.
-3. `expiry`: OTP expiry time in milliseconds
-4. `emailTheme`: Defines the theme for the OTP email. The package currently supports five themes:
-   - | Theme           | Theme Preview                                                                                           |
-     | --------------- | ------------------------------------------------------------------------------------------------------- |
-     | `EmailTheme.v1` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v1.PNG" width="500px;"> |
-     | `EmailTheme.v2` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v2.PNG" width="500px;"> |
-     | `EmailTheme.v3` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v3.PNG" width="500px;"> |
-     | `EmailTheme.v4` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v4.png" width="500px;"> |
-     | `EmailTheme.v5` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v5.png" width="500px;"> |
-     | `EmailTheme.v6` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v6.PNG" width="500px;"> |
-5. `appEmail`: The email address from which the OTP emails will be sent.
-6. `otpLength`: An integer specifying the length of the OTP. In this example, the OTP will be 6 digits long.
-
-By configuring these parameters, you can tailor the OTP generation and email sending process to suit your application's requirements.
-
-## SMTP (Optional)
-
-To send OTPs from a custom email address, configure your SMTP settings using the `setSMTP` method. Ensure that your SMTP credentials are accurate.
-
-```dart
-void main() {
-  EmailOTP.config();
-  EmailOTP.setSMTP(
-    host: 'mail.rohitchouhan.com',
-    emailPort: EmailPort.port25,
-    secureType: SecureType.tls,
-    username: 'test@rohitchouhan.com',
-    password: 'm9eFxuBQ4hbD5XGP3TEdWN',
-  );
-}
-```
 
 Parameters
 
@@ -101,6 +82,17 @@ Parameters
 5. `password`: The password for your SMTP server account.
 
 By configuring these parameters, you can ensure that your application is able to send OTP emails securely and efficiently.
+
+## Themes
+| Theme           | Theme Preview |
+|-----------------|----------------|
+| `EmailTheme.v1` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v1.PNG" width="500px"> |
+| `EmailTheme.v2` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v2.PNG" width="500px"> |
+| `EmailTheme.v3` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v3.PNG" width="500px"> |
+| `EmailTheme.v4` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v4.png" width="500px"> |
+| `EmailTheme.v5` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v5.png" width="500px"> |
+| `EmailTheme.v6` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v6.PNG" width="500px"> |
+
 
 ## Template (Optional)
 

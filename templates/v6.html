@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Feel Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            color: #4285f4;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 14px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .otp {
+            font-size: 36px;
+            color: #34a853;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer a {
+            color: #4285f4;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                {{appName}}
+            </h1>
+            <hr>
+        </div>
+        <div class="content">
+            <p>Dear User,</p>
+            <p>Your One-Time Password (OTP) is:</p>
+            <div class="otp">
+                {{otp}}
+            </div>
+            <p>Please use this OTP to complete your login process. Do not share this code with anyone.</p>
+            <p>Thank you for using {{appName}}!</p>
+        </div>
+        <div class="footer">
+            &copy; <a href="http://rohitchouhan.com">www.rohitchouhan.com</a>. All rights reserved.
+        </div>
+    </div>
+</body>
+
+</html>

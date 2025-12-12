@@ -1,10 +1,9 @@
 library email_otp;
 
-import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 import 'package:http/http.dart' as http;
 
 /// Enumerations for [OTPType]
@@ -64,7 +63,7 @@ class EmailOTP {
   static bool? _isExpired;
 
   EmailOTP() {
-    _otpResponse = _getRandomOTP();
+   // _otpResponse = _getRandomOTP(); // Don't generate on init, generate on send or explicit call
     _isExpired = false;
   }
 
@@ -78,7 +77,7 @@ class EmailOTP {
     EmailTheme? emailTheme,
   }) {
     _appName = appName ?? "Email OTP";
-    _appEmail = appEmail ?? "noreply@email-otp.rohitchouhan.com";
+    _appEmail = appEmail ?? "email-otp@pub.dev";
     _otpLength = otpLength ?? 6;
     _expiry = expiry ?? 0; // No expiry by default.
     _otpType = otpType ?? OTPType.numeric;
@@ -107,70 +106,64 @@ class EmailOTP {
 
   /// To send an OTP to a user's email address, use the [sendOTP] method.
   static Future<bool> sendOTP({required String email}) async {
-    // Base URL
-    String baseUrl = "https://email-otp.rohitchouhan.com";
-    Uri uri = Uri.parse("$baseUrl/v3");
-    // Headers
-    Map<String, String>? headers = {
-      "Content-Type": "application/json",
-      'X-Flutter-Request': "true"
-    };
-    // Body
-    Map<String, dynamic>? body = {
-      "app_name": _appName,
-      "app_email": _appEmail,
-      "user_email": email,
-      "otp_length": _otpLength,
-      "type": _otpType?.name,
-      "expiry": _expiry,
-      "theme": _emailTheme?.name,
-      // SMTP Configuration
-      if (_emailPort != null)
-        "smtp_port": int.parse(
-          _emailPort.toString().replaceAll('EmailPort.port', '').trim(),
-        ),
-      if (_secureType != null) "smtp_secure": _secureType?.name,
-      if (_host != null) "smtp_host": _host,
-      if (_username != null) "smtp_username": _username,
-      if (_password != null) "smtp_password": _password,
-      if (_template != null) "template": _template,
-    };
+    if (_host == null || _username == null || _password == null) {
+      debugPrint("❌ Error: SMTP configuration is missing. Please call setSMTP() before sending OTP.");
+      return false;
+    }
+
+    _otpResponse = _getRandomOTP();
+    
+    // Choose template
+    String htmlBody;
+    if (_template != null) {
+      htmlBody = _template!;
+    } else if (_emailTheme != null) {
+       htmlBody = await _getThemeHtml(_emailTheme!);
+    } else {
+       htmlBody = _getDefaultTheme();
+    }
+    
+    // Replace placeholders
+    htmlBody = htmlBody.replaceAll('{{appName}}', _appName ?? "App Name")
+                       .replaceAll('{{otp}}', _otpResponse!);
+
+    // SMTP Server Config
+    int port = 587; // default
+    if (_emailPort == EmailPort.port25) port = 25;
+    if (_emailPort == EmailPort.port465) port = 465;
+    if (_emailPort == EmailPort.port587) port = 587;
+    
+    final smtpServer = SmtpServer(_host!,
+      port: port,
+      username: _username,
+      password: _password,
+      ssl: _secureType == SecureType.ssl,
+      allowInsecure: _secureType == SecureType.none || _secureType == null, 
+      ignoreBadCertificate: false,
+    );
+
+    final message = Message()
+      ..from = Address(_appEmail ?? _username!, _appName)
+      ..recipients.add(email)
+      ..subject = 'Verification Code - ${_appName ?? "App Name"}'
+      ..html = htmlBody;
+
     try {
-      http.Response response = await http.post(
-        uri,
-        headers: headers,
-        body: jsonEncode(body),
-      );
-      var responseJson = jsonDecode(response.body);
-      if (response.statusCode == 200) {
-        if (responseJson['status']) {
-          _otpResponse = responseJson['otp'];
-          debugPrint("✅️ OTP Sent to Email 📧 Successfully");
-          if (_expiry != null && _expiry! > 0) {
-            var rand = _getRandomOTP();
-            _reassignOtpAfterDelay(
-                Duration(milliseconds: _expiry!), rand.toString());
-          }
-          return true;
-        } else {
-          debugPrint(
-              "❌ Error: ${response.statusCode}, Error Message: ${responseJson['messages']['message']}");
-          return false;
-        }
-      } else {
-        debugPrint(
-            "❌ Error: ${response.statusCode}, Error Message: ${responseJson['messages']['message']}");
-        return false;
+      final sendReport = await send(message, smtpServer);
+      debugPrint("✅️ OTP Sent to Email 📧 Successfully: ${sendReport.toString()}");
+      
+      if (_expiry != null && _expiry! > 0) {
+        var rand = _getRandomOTP();
+        _reassignOtpAfterDelay(
+            Duration(milliseconds: _expiry!), rand.toString());
       }
-    } on SocketException catch (e) {
-      debugPrint("Network Error: ${e.message}");
-      return false;
-    } on HttpException catch (e) {
-      debugPrint("Http Error: ${e.message}");
-      return false;
-    } on FormatException catch (e) {
-      debugPrint("Formatting Error: ${e.message}");
-      return false;
+      return true;
+    } on MailerException catch (e) {
+        debugPrint("❌ Error sending OTP: ${e.toString()}");
+        for (var p in e.problems) {
+          debugPrint('Problem: ${p.code}: ${p.msg}');
+        }
+        return false;
     } catch (e) {
       debugPrint("Unexpected Error: $e");
       return false;
@@ -209,6 +202,83 @@ class EmailOTP {
   }
 
   static String _getRandomOTP() {
-    return (Random().nextInt(900000) + 100000).toString();
+    int length = _otpLength ?? 6;
+    if(_otpType == OTPType.numeric) {
+       int min = pow(10, length - 1).toInt();
+       int max = pow(10, length).toInt() - 1;
+       return (Random().nextInt(max - min) + min).toString();
+    } else if (_otpType == OTPType.alpha) {
+       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+       return List.generate(length, (index) => chars[Random().nextInt(chars.length)]).join();
+    } else {
+       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+       return List.generate(length, (index) => chars[Random().nextInt(chars.length)]).join();
+    }
+  }
+  
+  static Future<String> _getThemeHtml(EmailTheme theme) async {
+    // Fetch the HTML template corresponding to the theme (e.g., v1.html, v2.html)
+    // from the GitHub repository via jsdelivr.
+    String themeName = theme.name; // v1, v2, etc.
+    String url = "https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@master/templates/$themeName.html";
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return response.body; 
+        // The calling function (sendOTP) will replace {{appName}} and {{otp}} placeholders 
+        // in this returned HTML.
+      } else {
+        debugPrint("⚠️ Failed to fetch template from $url (Status: ${response.statusCode}). Using fallback.");
+        return _getDefaultTheme(theme);
+      }
+    } catch (e) {
+      debugPrint("⚠️ Error fetching template: $e. Using fallback.");
+      return _getDefaultTheme(theme);
+    }
+  }
+
+  static String _getDefaultTheme([EmailTheme? theme]) {
+      String color = "#3366FF"; // v1/default color
+      if (theme != null) {
+        switch(theme) {
+           case EmailTheme.v1: color = "#FF5733"; break; 
+           case EmailTheme.v2: color = "#33FF57"; break;
+           case EmailTheme.v3: color = "#3357FF"; break;
+           case EmailTheme.v4: color = "#FF33A1"; break;
+           case EmailTheme.v5: color = "#33FFF6"; break;
+           case EmailTheme.v6: color = "#F6FF33"; break;
+        }
+      }
+      
+      return """
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .container { max-width: 600px; margin: auto; font-family: Arial, sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px; }
+  .header { text-align: center; padding: 20px 0; background-color: $color; color: white; border-radius: 10px 10px 0 0; }
+  .content { padding: 30px; text-align: center; }
+  .otp-code { font-size: 32px; font-weight: bold; letter-spacing: 5px; color: $color; margin: 20px 0; }
+  .footer { text-align: center; font-size: 12px; color: #888; margin-top: 20px; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Verification Code</h1>
+    </div>
+    <div class="content">
+      <p>Hello,</p>
+      <p>Your verification code for <strong>{{appName}}</strong> is:</p>
+      <div class="otp-code">{{otp}}</div>
+      <p>Please do not share this code with anyone.</p>
+    </div>
+    <div class="footer">
+      &copy; {{appName}}
+    </div>
+  </div>
+</body>
+</html>
+      """;
   }
 }
