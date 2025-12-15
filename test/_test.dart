@@ -15,21 +15,12 @@ void main() {
   EmailOTP.setSMTP(
     emailPort: EmailPort.port465,
     secureType: SecureType.ssl,
-    host: 'mail.rohitchouhan.com',
-    username: 'me@rohitchouhan.com',
+    host: 'smtp.host.com',
+    username: 'me@host.com',
     password: '***********'
   );
-
-  // Mock the send function to avoid network calls
-  EmailOTP.setSendFunction((message, smtpServer) async {
-    // Verify arguments if needed
-    debugPrint("Mock Send: Sending email to ${message.recipients.first}");
-    return true; // Return success
-  });
-
   test('Test Cases', () async {
-    // This will now use the mock, so it should return true and not hit the network
-    var isSent = await EmailOTP.sendOTP(email: "itsrohitofficial@gmail.com");
+    var isSent = await EmailOTP.sendOTP(email: "receiver@gmail.com");
     if (isSent) {
       receivedOTP = EmailOTP.getOTP()!;
       debugPrint('Received OTP: $receivedOTP');
