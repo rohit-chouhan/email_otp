@@ -1,6 +1,8 @@
 import 'package:email_otp/email_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 void main() {
   var receivedOTP = '000000';
@@ -11,15 +13,22 @@ void main() {
       expiry: 10000);
   
   EmailOTP.setSMTP(
-    emailPort: EmailPort.port587,
-    secureType: SecureType.tls,
-    host: 'smtp.gmail.com',
-    username: 'your-email@gmail.com',
-    password: 'your-password'
+    emailPort: EmailPort.port465,
+    secureType: SecureType.ssl,
+    host: 'mail.rohitchouhan.com',
+    username: 'me@rohitchouhan.com',
+    password: '***********'
   );
 
+  // Mock the send function to avoid network calls
+  EmailOTP.setSendFunction((message, smtpServer) async {
+    // Verify arguments if needed
+    debugPrint("Mock Send: Sending email to ${message.recipients.first}");
+    return true; // Return success
+  });
+
   test('Test Cases', () async {
-    // Note: This will fail to send without valid credentials, returning false.
+    // This will now use the mock, so it should return true and not hit the network
     var isSent = await EmailOTP.sendOTP(email: "itsrohitofficial@gmail.com");
     if (isSent) {
       receivedOTP = EmailOTP.getOTP()!;
@@ -31,8 +40,8 @@ void main() {
       }
       debugPrint("OTP has been sent");
     } else {
-      debugPrint("Failed to send OTP (Expected without real credentials)");
+      debugPrint("Failed to send OTP (Unexpected failure with mock)");
     }
-    // expect(isSent, true); // Commented out as we don't have real credentials in CI/Test
+    expect(isSent, true); 
   });
 }

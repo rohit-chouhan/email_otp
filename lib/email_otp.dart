@@ -1,5 +1,6 @@
 library email_otp;
 
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
@@ -115,12 +116,17 @@ class EmailOTP {
     
     // Choose template
     String htmlBody;
-    if (_template != null) {
-      htmlBody = _template!;
-    } else if (_emailTheme != null) {
-       htmlBody = await _getThemeHtml(_emailTheme!);
-    } else {
-       htmlBody = _getDefaultTheme();
+    try {
+      if (_template != null) {
+        htmlBody = _template!;
+      } else if (_emailTheme != null) {
+         htmlBody = await _getThemeHtml(_emailTheme!);
+      } else {
+         htmlBody = _getDefaultTheme();
+      }
+    } catch (e) {
+      debugPrint("⚠️ Error loading theme: $e. Using default theme.");
+      htmlBody = _getDefaultTheme();
     }
     
     // Replace placeholders
@@ -149,8 +155,8 @@ class EmailOTP {
       ..html = htmlBody;
 
     try {
-      final sendReport = await send(message, smtpServer);
-      debugPrint("✅️ OTP Sent to Email 📧 Successfully: ${sendReport.toString()}");
+      final verifySend = await send(message, smtpServer);
+      debugPrint("✅️ OTP Sent to Email 📧 Successfully: ${verifySend.toString()}");
       
       if (_expiry != null && _expiry! > 0) {
         var rand = _getRandomOTP();
@@ -159,13 +165,21 @@ class EmailOTP {
       }
       return true;
     } on MailerException catch (e) {
-        debugPrint("❌ Error sending OTP: ${e.toString()}");
+        debugPrint("❌ Mailer Error: ${e.toString()}");
         for (var p in e.problems) {
           debugPrint('Problem: ${p.code}: ${p.msg}');
         }
         return false;
-    } catch (e) {
-      debugPrint("Unexpected Error: $e");
+    } on SocketException catch (e) {
+        debugPrint("❌ Network Error: Connection to SMTP server failed. Check host, port, and internet connection.");
+        debugPrint("Details: ${e.message}");
+        return false;
+    } on TlsException catch (e) {
+        debugPrint("❌ Security Error: TLS/SSL handshake failed. Check your security settings (SSL vs TLS).");
+        debugPrint("Details: ${e.message}");
+        return false;
+   } catch (e) {
+      debugPrint("❌ Unexpected Error: $e");
       return false;
     }
   }
@@ -220,7 +234,7 @@ class EmailOTP {
     // Fetch the HTML template corresponding to the theme (e.g., v1.html, v2.html)
     // from the GitHub repository via jsdelivr.
     String themeName = theme.name; // v1, v2, etc.
-    String url = "https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@master/templates/$themeName.html";
+    String url = "https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/templates/$themeName.html";
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
