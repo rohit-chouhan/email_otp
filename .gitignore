@@ -27,4 +27,4 @@
 .dart_tool/
 .packages
 build/
-tes/
+test/
