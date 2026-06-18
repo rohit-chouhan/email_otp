@@ -1,10 +1,23 @@
+## 3.2.0
+- **Security**: Replaced `Random()` with `Random.secure()` in OTP generation to ensure cryptographically secure codes.
+- **Feature**: Added `EmailOTP.lastError` to retrieve specific error messages (e.g., SMTP Auth failure, network issues) when `sendOTP` fails.
+- **Feature**: Automatically attaches a plain text fallback to the email message to drastically improve deliverability and spam scores.
+- **Feature**: Added `resendOTP({required String email})` method to resend existing valid OTPs without generating new ones.
+- **Feature**: Added `headers` parameter to `EmailOTP.config()` allowing custom SMTP headers (like `Reply-To`).
+- **Feature**: Added `EmailPort.port1025` support to cleanly run test environments against MailHog or Mailpit.
+- **Fix**: Removed default `"email-otp@pub.dev"` sender address to prevent SPF/DMARC delivery failures. `appEmail` now defaults to the authenticated SMTP username.
+- **Fix**: Reset `_isExpired` flag in `sendOTP()` so subsequent OTP requests aren't instantly marked as expired.
+- **Fix**: Enforced `_isExpired` check in `verifyOTP()` and securely trimmed whitespace from user input.
+- Added explicit `void` return types to static methods to resolve static analysis lint warnings.
+- Upgraded `mailer` dependency to `^7.1.0`.
+- **Feature**: Added `v7`, `v8`, `v9`, and `v10` premium templates with responsive light/dark modes.
+- **Feature**: Added dynamic `{{year}}` placeholder replacement for email footers.
+- **Fix**: Rebuilt all previous templates (`v1` to `v6`) to properly support responsive dark mode rendering across all major email clients.
 ## 3.1.0
 - **BREAKING CHANGE**: Removed server-side dependency. Now sends emails directly from the client.
 - **REQUIRED**: You must now provide your own SMTP credentials using `EmailOTP.setSMTP()`.
 - Added remote template fetching from GitHub via jsDelivr.
 - Added dependency `mailer` and `http`.
-
-
 - OTP expiry option added
 - `getOTP` changed into method `getOTP()`
 - `isExpired()` method added to validate otp expiry time

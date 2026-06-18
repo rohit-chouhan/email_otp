@@ -93,6 +93,41 @@
             color: white;
             background-color: #2c3e50;
         }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+            }
+
+            .container {
+                background-color: #1e1e1e;
+                border: 1px solid #333;
+            }
+
+            .header {
+                background-color: #1a252f;
+            }
+
+            p {
+                color: #cccccc;
+            }
+
+            .footer {
+                background-color: #1a1a1a;
+            }
+
+            .footer-text {
+                color: #888888;
+            }
+
+            .footer-text a {
+                color: #3498db;
+            }
+
+            .divider {
+                background-color: #333;
+            }
+        }
     </style>
 </head>
 
@@ -115,8 +150,8 @@
         </center>
         <div class="divider"></div>
         <div class="footer">
-            <p class="footer-text">&copy; <strong><a href="https://www.rohitchouhan.com">www.rohitchouhan.com</a>
-                </strong></p>
+            <p class="footer-text">&copy; {{year}} {{appName}}. All rights reserved.<br />Powered by <a
+                    href="https://pub.dev/packages/email_otp">email_otp</a></p>
         </div>
     </div>
 </body>

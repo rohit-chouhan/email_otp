@@ -57,6 +57,15 @@
             color: #4285f4;
             text-decoration: none;
         }
+        @media (prefers-color-scheme: dark) {
+            body { background-color: #121212; }
+            .container { background: #1e1e1e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); border: 1px solid #333; }
+            .header h1 { color: #8ab4f8; }
+            .content p { color: #e8eaed; }
+            .otp { color: #81c995; }
+            .footer { color: #9aa0a6; }
+            .footer a { color: #8ab4f8; }
+        }
     </style>
 </head>
 
@@ -78,7 +87,8 @@
             <p>Thank you for using {{appName}}!</p>
         </div>
         <div class="footer">
-            &copy; <a href="http://rohitchouhan.com">www.rohitchouhan.com</a>. All rights reserved.
+            &copy; {{year}} {{appName}}. All rights reserved.<br/>
+            Powered by <a href="https://pub.dev/packages/email_otp">email_otp</a>
         </div>
     </div>
 </body>

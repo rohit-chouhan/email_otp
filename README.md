@@ -62,6 +62,9 @@ void main() {
     emailTheme: EmailTheme.v6,
     appEmail: 'me@rohitchouhan.com',
     otpLength: 6,
+    headers: {
+      'Reply-To': 'support@rohitchouhan.com'
+    }
   );
 }
 ```
@@ -74,6 +77,7 @@ Parameters
    - `EmailPort.port25`
    - `EmailPort.port465`
    - `EmailPort.port587`
+   - `EmailPort.port1025` (For MailHog/Local Testing)
 3. `secureType:` The type of security used by the SMTP server. Supported values include:
    - `SecureType.none`
    - `SecureType.tls`
@@ -86,12 +90,16 @@ By configuring these parameters, you can ensure that your application is able to
 ## Themes
 | Theme           | Theme Preview |
 |-----------------|----------------|
-| `EmailTheme.v1` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v1.PNG" width="500px"> |
-| `EmailTheme.v2` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v2.PNG" width="500px"> |
-| `EmailTheme.v3` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v3.PNG" width="500px"> |
-| `EmailTheme.v4` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v4.png" width="500px"> |
-| `EmailTheme.v5` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v5.png" width="500px"> |
-| `EmailTheme.v6` | <img src="https://raw.githubusercontent.com/rohit-chouhan/email_otp/main/themes/v6.PNG" width="500px"> |
+| `EmailTheme.v1` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v1.png" width="500px"> |
+| `EmailTheme.v2` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v2.png" width="500px"> |
+| `EmailTheme.v3` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v3.png" width="500px"> |
+| `EmailTheme.v4` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v4.png" width="500px"> |
+| `EmailTheme.v5` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v5.png" width="500px"> |
+| `EmailTheme.v6` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v6.png" width="500px"> |
+| `EmailTheme.v7` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v7.png" width="500px"> |
+| `EmailTheme.v8` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v8.png" width="500px"> |
+| `EmailTheme.v9` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v9.png" width="500px"> |
+| `EmailTheme.v10` | <img src="https://cdn.jsdelivr.net/gh/rohit-chouhan/email_otp@main/themes/v10.png" width="500px"> |
 
 
 ## Template (Optional)
@@ -127,12 +135,23 @@ By configuring these parameters and using a custom template, you can ensure that
 To 📧 send an 🔐 OTP to a user's email address, use the `sendOTP` method. This method takes the recipient's email address as a parameter.
 
 ```dart
-  EmailOTP.sendOTP(email: emailController.text)
+  bool isSent = await EmailOTP.sendOTP(email: emailController.text);
+  if (!isSent) {
+    print(EmailOTP.lastError); // Prints specific error (e.g. SMTP Auth failed)
+  }
 ```
 
 Parameters
 
 - `email`: The recipient's email address where the OTP will be sent.
+
+## Resending OTP
+
+If a user requests a new OTP because they didn't receive the first one, you can use `resendOTP` instead of generating a new one. This will re-send the *existing* valid OTP. If it has already expired, a new one will automatically be generated.
+
+```dart
+  EmailOTP.resendOTP(email: emailController.text);
+```
 
 ## Verifying OTP
 

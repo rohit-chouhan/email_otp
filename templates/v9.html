@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fca5a5;
+            --card-bg: #ffffff;
+            --text-main: #000000;
+            --accent: #ef4444;
+            --box-shadow: 8px 8px 0px #000000;
+            --border-color: #000000;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a0505;
+                --card-bg: #222222;
+                --text-main: #ffffff;
+                --accent: #fca5a5;
+                --box-shadow: 8px 8px 0px #ef4444;
+                --border-color: #ef4444;
+            }
+        }
+        body {
+            font-family: 'Space Grotesk', sans-serif; margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; background-color: var(--bg-color); color: var(--text-main);
+        }
+        .container {
+            background: var(--card-bg); border: 3px solid var(--border-color);
+            box-shadow: var(--box-shadow); padding: 40px; max-width: 400px; width: 100%;
+        }
+        .header { text-align: left; margin-bottom: 20px; border-bottom: 3px solid var(--border-color); padding-bottom: 10px; }
+        .header h1 { font-size: 32px; font-weight: 700; margin: 0; text-transform: uppercase; }
+        .content p { font-size: 16px; margin: 10px 0; font-weight: 500; }
+        .otp-box {
+            background: var(--accent); color: var(--card-bg);
+            border: 3px solid var(--border-color); padding: 20px;
+            margin: 30px 0; text-align: center; transform: rotate(-2deg);
+        }
+        @media (prefers-color-scheme: dark) {
+            .otp-box { color: #000000; }
+        }
+        .otp { font-size: 48px; font-weight: 700; letter-spacing: 6px; margin: 0; }
+        .footer {
+            margin-top: 30px; font-size: 14px; font-weight: 500;
+            border-top: 3px solid var(--border-color); padding-top: 20px;
+        }
+        .footer a { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h1>{{appName}}</h1></div>
+        <div class="content">
+            <p>Hey there!</p>
+            <p>Here is your magic code to get in:</p>
+            <div class="otp-box"><div class="otp">{{otp}}</div></div>
+            <p style="font-size: 14px;">Keep it secret, keep it safe!</p>
+        </div>
+        <div class="footer">
+            &copy; {{year}} {{appName}}. All rights reserved.<br/>
+            Powered by <a href="https://pub.dev/packages/email_otp">email_otp</a>
+        </div>
+    </div>
+</body>
+</html>

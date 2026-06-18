@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-grad: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --otp-bg: #f8fafc;
+            --otp-border: #e2e8f0;
+            --accent: #a855f7;
+            --card-border: rgba(255, 255, 255, 0.5);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-grad: linear-gradient(135deg, #2e1065 0%, #1e1b4b 100%);
+                --card-bg: rgba(15, 23, 42, 0.95);
+                --text-main: #f8fafc;
+                --text-muted: #cbd5e1;
+                --otp-bg: #1e293b;
+                --otp-border: #334155;
+                --accent: #d8b4fe;
+                --card-border: rgba(255, 255, 255, 0.1);
+                --shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            }
+        }
+        body {
+            font-family: 'Inter', sans-serif; margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; background: var(--bg-grad); color: var(--text-main);
+        }
+        .container {
+            background: var(--card-bg); border-radius: 16px;
+            box-shadow: var(--shadow); padding: 40px; max-width: 420px; width: 100%;
+            border: 1px solid var(--card-border);
+        }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 {
+            font-size: 26px; font-weight: 800; margin: 0;
+            background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .content { text-align: center; }
+        .content p { font-size: 15px; color: var(--text-muted); margin: 10px 0; line-height: 1.6; }
+        .otp-box {
+            background: var(--otp-bg); border-radius: 12px; padding: 24px;
+            margin: 30px 0; border: 1px solid var(--otp-border);
+        }
+        .otp { font-size: 48px; font-weight: 800; letter-spacing: 8px; margin: 0; color: var(--text-main); }
+        .warning { font-size: 12px; margin-top: 20px; color: var(--text-muted); }
+        .footer {
+            text-align: center; margin-top: 30px; font-size: 12px; color: var(--text-muted);
+            border-top: 1px solid var(--otp-border); padding-top: 20px;
+        }
+        .footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h1>{{appName}}</h1></div>
+        <div class="content">
+            <p>We received a request to verify your identity.</p>
+            <p>Please enter the following code to continue:</p>
+            <div class="otp-box"><div class="otp">{{otp}}</div></div>
+            <p class="warning">Do not share this code with anyone. It will expire shortly.</p>
+        </div>
+        <div class="footer">
+            &copy; {{year}} {{appName}}. All rights reserved.<br/>
+            Powered by <a href="https://pub.dev/packages/email_otp">email_otp</a>
+        </div>
+    </div>
+</body>
+</html>

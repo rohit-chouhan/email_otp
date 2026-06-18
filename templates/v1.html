@@ -96,6 +96,12 @@
                 border-color: #34495e !important;
             }
         }
+        @media (prefers-color-scheme: dark) {
+            body, table.body, td.container, table[bgcolor="#f2f3f8"], td[style*="background-color: #f2f3f8"] { background-color: #121212 !important; }
+            table.main { background: #1e1e1e !important; }
+            p { color: #cccccc !important; }
+            .powered-by, .powered-by a { color: #888888 !important; }
+        }
     </style>
 </head>
 
@@ -156,7 +162,7 @@
                                                                         <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px; text-align: center; background-color: #3498db;"
                                                                             valign="top" align="center"
                                                                             bgcolor="#3498db"> <a
-                                                                                href="http://rohitchouhan.com"
+                                                                                href="https://pub.dev/packages/email_otp"
                                                                                 target="_blank"
                                                                                 style="border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-decoration: none; text-transform: capitalize; background-color: #3498db; border-color: #3498db; color: #ffffff;">{{otp}}</a>
                                                                         </td>
@@ -189,9 +195,9 @@
                                 <td class="content-block powered-by"
                                     style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;"
                                     valign="top" align="center">
-                                    OTP Service & Created by <a href="http://rohitchouhan.com"
-                                        style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">Rohit
-                                        Chouhan</a>.
+                                    &copy; {{year}} {{appName}}. All rights reserved.<br/>
+                                    Powered by <a href="https://pub.dev/packages/email_otp"
+                                        style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">email_otp</a>.
                                 </td>
                             </tr>
                         </table>

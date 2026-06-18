@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf9f6;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #555555;
+            --accent: #d4af37; /* Gold */
+            --border-color: #eaeaea;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f141e; /* Navy dark */
+                --card-bg: #161c27;
+                --text-main: #f0f0f0;
+                --text-muted: #a0a0a0;
+                --accent: #e5c158;
+                --border-color: #2a3441;
+            }
+        }
+        body {
+            font-family: 'Lora', serif; margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; background-color: var(--bg-color); color: var(--text-main);
+        }
+        .container {
+            background: var(--card-bg); border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 50px 40px;
+            max-width: 450px; width: 100%; text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .header { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--accent); }
+        .header h1 {
+            font-family: 'Playfair Display', serif; font-size: 28px;
+            font-weight: 700; margin: 0; color: var(--text-main); letter-spacing: 2px;
+        }
+        .content p { font-size: 16px; color: var(--text-muted); margin: 15px 0; line-height: 1.7; }
+        .otp-box { margin: 35px 0; }
+        .otp {
+            font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700;
+            letter-spacing: 12px; margin: 0; color: var(--accent);
+        }
+        .footer {
+            margin-top: 40px; font-size: 13px; color: var(--text-muted);
+            padding-top: 20px; border-top: 1px solid var(--border-color); font-style: italic;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h1>{{appName}}</h1></div>
+        <div class="content">
+            <p>Greetings,</p>
+            <p>We have received a request to authorize an action on your account. Please use the verification code provided below.</p>
+            <div class="otp-box"><div class="otp">{{otp}}</div></div>
+            <p>This code is strictly confidential. Should you not recognize this request, kindly disregard this communication.</p>
+        </div>
+        <div class="footer">
+            &copy; {{year}} {{appName}}. All rights reserved.<br/>
+            Powered by <a href="https://pub.dev/packages/email_otp">email_otp</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -63,6 +63,15 @@
             color: #888888;
             font-size: 12px;
         }
+        @media (prefers-color-scheme: dark) {
+            body { background-color: #121212; }
+            .container { background-color: #1e1e1e; }
+            .header { background-color: #303f9f; }
+            .content p { color: #e8eaed; }
+            .otp { background-color: #2c2c2c; color: #8ab4f8; }
+            .footer { background-color: #2c2c2c; color: #aaaaaa; }
+            .footer a { color: #8ab4f8; }
+        }
     </style>
     <title>{{appName}} OTP</title>
 </head>
@@ -80,8 +89,8 @@
             <p>Please use this OTP to complete your login process. Do not share this code with anyone.</p>
         </div>
         <div class="footer">
-            &copy; <a href="http://rohitchouhan.com">www.rohitchouhan.com</a>. All rights
-            reserved.
+            &copy; {{year}} {{appName}}. All rights reserved.<br/>
+            Powered by <a href="https://pub.dev/packages/email_otp">email_otp</a>
         </div>
     </div>
 </body>

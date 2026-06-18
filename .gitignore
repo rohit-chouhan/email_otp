@@ -3,11 +3,13 @@
 *.log
 *.pyc
 *.swp
+*.env
 .DS_Store
 .atom/
 .buildlog/
 .history
 .svn/
+OPEN_ISSUES.md
 
 # IntelliJ related
 *.iml
@@ -27,4 +29,5 @@
 .dart_tool/
 .packages
 build/
-test/
+/graphify-out
+.env

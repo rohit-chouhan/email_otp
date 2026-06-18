@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #0284c7;
+            --border-color: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --card-bg: #1e293b;
+                --text-main: #f8fafc;
+                --text-muted: #94a3b8;
+                --accent: #38bdf8;
+                --border-color: #334155;
+            }
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+        .container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+            max-width: 400px; width: 100%;
+            border: 1px solid var(--border-color);
+        }
+        .header h1 {
+            font-size: 28px; color: var(--accent);
+            text-align: center; margin-bottom: 5px; font-weight: 700;
+        }
+        .header p {
+            text-align: center; color: var(--text-muted);
+            font-size: 14px; margin-bottom: 30px;
+        }
+        .content p { font-size: 15px; margin: 10px 0; line-height: 1.5; }
+        .otp-container {
+            background: var(--bg-color);
+            border: 2px dashed var(--accent);
+            border-radius: 8px; padding: 20px;
+            margin: 25px 0; text-align: center;
+        }
+        .otp {
+            font-size: 42px; color: var(--accent);
+            font-weight: 700; letter-spacing: 4px;
+        }
+        .footer {
+            text-align: center; margin-top: 30px;
+            font-size: 12px; color: var(--text-muted);
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{appName}}</h1>
+            <p>Secure Authentication</p>
+        </div>
+        <div class="content">
+            <p>Hello,</p>
+            <p>A request has been received to authenticate your account. Please use the verification code below to proceed.</p>
+            <div class="otp-container"><div class="otp">{{otp}}</div></div>
+            <p style="font-size: 13px; color: var(--text-muted);">If you did not request this code, please ignore this email or contact support immediately. This code is only valid for a limited time.</p>
+        </div>
+        <div class="footer">
+            &copy; {{year}} {{appName}}. All rights reserved.<br/>
+            Powered by <a href="https://pub.dev/packages/email_otp">email_otp</a>
+        </div>
+    </div>
+</body>
+</html>
